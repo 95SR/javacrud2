@@ -27,7 +27,6 @@ const getAllStudents= async () => {
 
     let url = '/api/v1/students'
     const data = await fetchData(url)
-    console.log(data)
     showData(data)
 }
 
@@ -41,27 +40,51 @@ const showData = (data) => {
         <th>전화번호</th>
         <th>거주지역</th>
     </tr>`
-    for (let index = 0; index < data.length; index++) {
+    if(data.length==0){
         tab+= `<tr>
-        <td>${data[index].id}</td>
-        <td>${data[index].name}</td>
-        <td>${data[index].sex}</td>
-        <td>${data[index].age}</td>
-        <td>${data[index].phone}</td>
-        <td>${data[index].location}</td>
-        </tr>`
+            <td>No data</td>
+            
+            </tr>`
+
+    } else if( data.length > 1){
+        for (let index = 0; index < data.length; index++) {
+            tab+= `<tr>
+            <td>${data[index].id}</td>
+            <td>${data[index].name}</td>
+            <td>${data[index].sex}</td>
+            <td>${data[index].age}</td>
+            <td>${data[index].phone}</td>
+            <td>${data[index].location}</td>
+            </tr>`
+        }
+
+    } else {
+        tab+= `<tr>
+            <td>${data.id}</td>
+            <td>${data.name}</td>
+            <td>${data.sex}</td>
+            <td>${data.age}</td>
+            <td>${data.phone}</td>
+            <td>${data.location}</td>
+            </tr>`
     }
+    
 
     document.getElementById("studentsData").innerHTML = tab;
     
 }
 
-const searchStudent = () => {
+const searchStudent = async() => {
     
     let form = document.getElementById("searchForm")
     let searchId = document.getElementById("searchId").value
+    let url = `/api/v1/student/${searchId}`
 
-    console.log(searchId)
+    const data = await fetchData(url)
+    console.log(data)
+    showData(data)
+
+
     
 }
 

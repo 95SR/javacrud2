@@ -1,51 +1,53 @@
 package com.example.student.student;
 
 import java.io.BufferedReader;
+import java.io.Console;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ResourceUtils;
 
 public class CsvReader {
 
-   
-
-    public static ArrayList<Student> csvData() {
-        ArrayList<Student> csvdata= new ArrayList<>();
+    public static ArrayList<Student> studentData() {
+        ArrayList<Student> csvdata = new ArrayList<>();
 
         try {
-            
+
             File file;
             file = ResourceUtils.getFile("classpath:sample.csv");
             BufferedReader reader = new BufferedReader(new FileReader(file));
             String line;
+            String[] headerSplit;
+            HashMap<String,Integer> header_index = new HashMap<>();
             boolean isFirst = true;
             String[] lineSplit;
-            while((line = reader.readLine())!= null){
-                if(isFirst){
-                    isFirst=false;
+            while ((line = reader.readLine()) != null) {
+                if (isFirst) {
+                    headerSplit = line.split(",");
+                    for (int i = 0 ; i < headerSplit.length ; i++) {
+                        header_index.put(headerSplit[i], i);
+                    }
+                    System.out.println(header_index);
+                    isFirst = false;
                     continue;
                 }
-                lineSplit= line.split(",");
+                lineSplit = line.split(",");
 
-                Student student = new Student(Integer.parseInt(lineSplit[0]));
-            student.setName(lineSplit[1]);
-            student.setSex(lineSplit[2]);
-            student.setAge(Integer.parseInt(lineSplit[3]));
-            student.setPhone(lineSplit[4]);
-            student.setLocation(lineSplit[5]);
+                Student student = new Student(Integer.parseInt(lineSplit[header_index.get("id")]));
+                student.setName(lineSplit[header_index.get("이름")]);
+                student.setSex(lineSplit[header_index.get("성별")]);
+                student.setAge(Integer.parseInt(lineSplit[header_index.get("나이")]));
+                student.setPhone(lineSplit[header_index.get("전화번호")]);
+                student.setLocation(lineSplit[header_index.get("거주지역")]);
 
-            csvdata.add(student);
+                csvdata.add(student);
 
             }
-            
-            
-
-           
 
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block

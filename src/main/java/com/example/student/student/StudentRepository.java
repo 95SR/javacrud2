@@ -8,7 +8,7 @@ public class StudentRepository {
     private ArrayList<Student> mydata;
 
     public StudentRepository(){
-        mydata = CsvReader.csvData();
+        mydata = CsvReader.studentData();
     }
 
     public ArrayList<Student> getAllStudents(){
