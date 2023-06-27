@@ -2,14 +2,33 @@ window.onload = () => {
     getAllStudents()
 }
 
-const getAllStudents= () => {
-    fetch('/api/v1/students')
-    .then((res) => {
-        return res.json()
-    }).then((data)=> {
-        console.log(data)
-        showData(data)
-    })
+const fetchData = async(url) => {
+    const res = await fetch(url)
+    const success = res.ok
+    let data;
+    if(success){
+        data = await res.json()
+        return data
+    }else{
+        console.log("not found") 
+    }
+    
+    
+}
+
+const getAllStudents= async () => {
+    // fetch('/api/v1/students')
+    // .then((res) => {
+    //     return res.json()
+    // }).then((data)=> {
+    //     console.log(data)
+    //     showData(data)
+    // })
+
+    let url = '/api/v1/students'
+    const data = await fetchData(url)
+    console.log(data)
+    showData(data)
 }
 
 const showData = (data) => {
@@ -41,8 +60,9 @@ const searchStudent = () => {
     
     let form = document.getElementById("searchForm")
     let searchId = document.getElementById("searchId").value
-    console.log(form)
+
     console.log(searchId)
+    
 }
 
 
