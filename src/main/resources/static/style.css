@@ -4,3 +4,10 @@
     
     justify-content: space-around;
 }
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button{
+   display: none;
+}
+
+

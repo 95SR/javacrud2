@@ -32,7 +32,7 @@ public class CsvReader {
                     for (int i = 0 ; i < headerSplit.length ; i++) {
                         header_index.put(headerSplit[i], i);
                     }
-                    System.out.println(header_index);
+                    
                     isFirst = false;
                     continue;
                 }

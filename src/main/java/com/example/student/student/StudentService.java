@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class StudentService {
+    
 
     @Autowired
     private StudentRepository repository;
@@ -17,6 +18,13 @@ public class StudentService {
 
     public Student findStudent(int id){
         return repository.findStudent(id);
+    }
+
+    public Student addStudent(Student student){
+        Student newStudent = repository.saveStudent(student);
+        System.out.println("service:" +newStudent);
+
+        return newStudent;
     }
     
 }

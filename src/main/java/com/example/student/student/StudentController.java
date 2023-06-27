@@ -20,20 +20,52 @@ public class StudentController {
     private StudentService service;
     
     @GetMapping("/students")
-    public ArrayList<Student> allStudents(){
+    public StudentsResponse allStudents(){
+        ArrayList<Student> studentList = service.getAllStudents();
+        StudentsResponse response = new StudentsResponse();
+        if (studentList != null){
+            response.setData(studentList);
+            
+        } else {
+            response.setStatus(404);
+            response.setSuccess(false);
+            response.setData(null);
+        }
 
-        return service.getAllStudents();
+        return response;
     }
 
     @GetMapping("/student/{id}")
-    public Student findStudent(@PathVariable int id){
+    public StudentResponse findStudent(@PathVariable int id){
         Student student = service.findStudent(id);
-        return student;
+        StudentResponse response = new StudentResponse();
+
+        if (student != null){
+            response.setData(student);
+        } else{
+            response.setStatus(404);
+            response.setSuccess(false);
+            response.setData(null);
+        }
+        
+        return response;
     }
 
     @PostMapping("/students")
-    public Student addStudent(@RequestBody Student student){
-        return null;
+    public StudentResponse addStudent(@RequestBody Student student){
+        Student newStudent = service.addStudent(student);
+        System.out.println("controller:" + newStudent);
+        StudentResponse response = new StudentResponse();
+
+        if (newStudent != null){
+            response.setData(newStudent);
+        }else{
+            response.setStatus(101);
+            response.setSuccess(false);
+            response.setData(null);
+        }
+        
+        return response;
     }
 
     
