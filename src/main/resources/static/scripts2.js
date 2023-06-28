@@ -1,4 +1,7 @@
-
+window.addEventListener("load", ()=> {
+    console.log("load")
+    getAllStudents()
+})
 
 const fetchData = async(url) => {
     const res = await fetch(url)
@@ -38,39 +41,17 @@ const postData = async(url,data) => {
     return responseData
 
     
-    
 }
 
+
+
 const getAllStudents= async () => {
-    // fetch('/api/v1/students')
-    // .then((res) => {
-    //     return res.json()
-    // }).then((data)=> {
-    //     console.log(data.studentList)
-    //     showData(data)
-    // })
-console.log("test")
+   
+
     let url = '/api/v1/students'
     const data = await fetchData(url)
     
     showData(data)
-}
-
-const findStudent= async () => {
-    
-    let searchId = document.getElementById("searchId").value
-    
-    if(searchId == ""){
-        window.alert("학번을 입력하셔야 합니다.")
-        
-    } else{
-        let url = `/api/v1/student/${searchId}`
-        const data = await fetchData(url)
-        
-        showData(data)
-    }
-
-    
 }
 
 const showData = (data) => {
@@ -90,15 +71,24 @@ const showData = (data) => {
         </tr>`
     }
     else if( data.length > 1){
+        
         for (let index = 0; index < data.length; index++) {
-            tab+= `<tr>
-            <td>${data[index].id}</td>
+            tab+= `<tr id=${index}>
+            <div>
+            <td >${data[index].id}</td>
             <td>${data[index].name}</td>
             <td>${data[index].sex}</td>
             <td>${data[index].age}</td>
             <td>${data[index].phone}</td>
             <td>${data[index].location}</td>
-            </tr>`
+            
+            </div>
+            
+            <td><button onclick="editStudent(${index})" >수정</button></td>
+           
+            <td><button onclick="delStudent(${index})">삭제</button></td>
+            </tr>
+            `
         }
 
     } else {
@@ -109,6 +99,9 @@ const showData = (data) => {
             <td>${data.age}</td>
             <td>${data.phone}</td>
             <td>${data.location}</td>
+            <td><button onclick="editStudent()">수정</button></td>
+            
+            <td><button onclick="delStudent()">삭제</button></td>
             </tr>`
     }
     
@@ -117,20 +110,24 @@ const showData = (data) => {
     
 }
 
-
-
-getAllStudents()
-
-var addForm = document.getElementById("addForm")
-
-
-const searchStudent =  () => {
-    console.log("test")
-     findStudent() 
+const searchStudent =  async (e) => {
+   
+     e.preventDefault()
+     console.log("test")
+     let searchId = document.getElementById("searchId").value
+    
+    if(searchId == ""){
+        window.alert("학번을 입력하셔야 합니다.")
+        
+    } else{
+        let url = `/api/v1/student/${searchId}`
+        const data = await fetchData(url)
+        
+        showData(data)
+    }
+ 
    
 }
-
-
 
 const addStudent = async (e) => {
     e.preventDefault()
@@ -164,7 +161,40 @@ const addStudent = async (e) => {
     }
 }
 
+const reload = () => {
+    location.reload()
+}
+
+const searchForm = document.getElementById("searchForm");
+
+const editStudent = (key) => {
+    const form = document.getElementById("addForm")
+    for(i=0 ; i< form.length-1 ; i++){
+        form[i].value = document.getElementById(key).childNodes[2^i+1].textContent
+    }
+    console.log(form)
+    document.getElementById("addTitle").innerHTML="학생 정보 수정"
+    document.getElementById("addBtn").innerHTML="저장"
+
+    console.log("testedit")
+}
+
+const delStudent = async (key) => {
+    studentName = document.getElementById(key).childNodes[3].textContent
+    studentId = document.getElementById(key).childNodes[1].textContent
+    
+    if (confirm(`${studentName}학생을 삭제하시겠습니까?`)){
+        const res = await fetch(`/api/v1/student/${studentId}`,{
+            method:"delete"
+        })
+        
+        location.reload()
+    }
+    
+}
+
 addForm.addEventListener("submit", addStudent)
+searchForm.addEventListener("submit", searchStudent)
 
 
-
+console.log("pass")

@@ -26,5 +26,11 @@ public class StudentService {
 
         return newStudent;
     }
+
+    public boolean removeStudent(int id){
+        boolean deleted = repository.removeStudent(id);
+
+        return deleted;
+    }
     
 }

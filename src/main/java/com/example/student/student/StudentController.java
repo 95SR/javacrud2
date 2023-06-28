@@ -4,6 +4,7 @@ package com.example.student.student;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -65,6 +66,22 @@ public class StudentController {
             response.setData(null);
         }
         
+        return response;
+    }
+
+    @DeleteMapping("/student/{id}")
+    public BoolResponse removeStudent(@PathVariable int id){
+        System.out.println("controller:" + id);
+        boolean deleted = service.removeStudent(id);
+        BoolResponse response = new BoolResponse();
+        if(deleted){
+            response.setData(deleted);
+        } else {
+            response.setSuccess(false);
+            
+        }
+        
+
         return response;
     }
 

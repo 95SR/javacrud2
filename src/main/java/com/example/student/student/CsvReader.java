@@ -28,6 +28,7 @@ public class CsvReader {
             String[] lineSplit;
             while ((line = reader.readLine()) != null) {
                 if (isFirst) {
+                    System.out.println(line +"scvreader");
                     headerSplit = line.split(",");
                     for (int i = 0 ; i < headerSplit.length ; i++) {
                         header_index.put(headerSplit[i], i);
@@ -37,6 +38,7 @@ public class CsvReader {
                     continue;
                 }
                 lineSplit = line.split(",");
+                System.out.println(line);
 
                 Student student = new Student(Integer.parseInt(lineSplit[header_index.get("id")]));
                 student.setName(lineSplit[header_index.get("이름")]);

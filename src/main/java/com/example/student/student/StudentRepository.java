@@ -1,6 +1,7 @@
 package com.example.student.student;
 
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
 import org.springframework.stereotype.Repository;
 
@@ -13,7 +14,7 @@ public class StudentRepository {
     }
 
     public ArrayList<Student> getAllStudents() {
-
+        System.out.println(mydata);
         return mydata;
     }
 
@@ -42,6 +43,7 @@ public class StudentRepository {
 
         if(!duplicateId){
             mydata.add(student);
+            CsvWriter.studentData(student);
             newStudent = student;
             
         }
@@ -50,5 +52,17 @@ public class StudentRepository {
 
         return newStudent;
 
+    }
+
+    public boolean removeStudent(int id){
+       
+    boolean deleted=false;
+       Predicate<Student> condition = student -> student.getId()==id;
+       deleted = mydata.removeIf(condition);
+        CsvWriter.removeStudent(id);
+       
+
+
+       return deleted;
     }
 }
