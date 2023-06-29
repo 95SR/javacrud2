@@ -6,13 +6,14 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.springframework.util.ResourceUtils;
 
 public class CsvWriter {
 
     public static void studentData(Student student) {
-        System.out.println("try to write");
+        
         File file;
         try {
             String fileName = "src/main/resources/sample.csv";
@@ -40,30 +41,27 @@ public class CsvWriter {
         }
     }
 
-    public static void removeStudent(int id) {
+    public static void updateStudent(ArrayList<Student> students) {
       
         File file;
         try {
-            file = ResourceUtils.getFile("classpath:sample2.csv");
-           
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            FileWriter writer = new FileWriter(file, true);
-        String line;
-        String idStr;
-        String studentId;
-        while(true){
-            line = reader.readLine();
-            idStr = String.valueOf(id);
-            studentId = String.valueOf(line.charAt(0));
-            if(studentId.equals(idStr)){
-                System.out.println(line);
-                
-                
-                break;
-            }
+            String fileName = "src/main/resources/sample.csv";
+            FileWriter writer = new FileWriter(fileName);
+            String toCsv ="id,이름,성별,나이,전화번호,거주지역";
             
-        }
-        writer.flush();
+            for (Student student : students) {
+                String objString = student.toString();
+               
+                toCsv+=System.lineSeparator();
+                
+                toCsv+=objString;
+                
+            }
+            writer.write(toCsv);
+           writer.flush();
+            
+        
+       
         } catch (FileNotFoundException e) {
             
             e.printStackTrace();

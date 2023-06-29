@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -82,6 +83,23 @@ public class StudentController {
         }
         
 
+        return response;
+    }
+
+    @PutMapping("/students")
+    public StudentResponse editStudent(@RequestBody Student student){
+        Student newStudent = service.editStudent(student);
+        System.out.println("controller:" + newStudent);
+        StudentResponse response = new StudentResponse();
+
+        if (newStudent != null){
+            response.setData(newStudent);
+        }else{
+            response.setStatus(101);
+            response.setSuccess(false);
+            response.setData(null);
+        }
+        
         return response;
     }
 

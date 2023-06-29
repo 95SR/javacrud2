@@ -32,5 +32,10 @@ public class StudentService {
 
         return deleted;
     }
-    
+
+    public Student editStudent(Student student){
+        Student editedStudent = repository.editStudent(student);
+
+        return editedStudent;
+    }
 }

@@ -2,7 +2,7 @@ package com.example.student.student;
 
 import org.springframework.stereotype.Component;
 
-@Component
+
 public class Student {
     private int id;
     private String name;
@@ -67,6 +67,10 @@ public class Student {
         this.location = location;
     }
 
+    @Override
+    public String toString() {
+        return id + "," + name + "," + sex+ "," + age+ "," + phone+ "," + location; 
+    }
     
     
 }

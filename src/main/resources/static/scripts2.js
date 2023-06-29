@@ -170,13 +170,17 @@ const searchForm = document.getElementById("searchForm");
 const editStudent = (key) => {
     const form = document.getElementById("addForm")
     for(i=0 ; i< form.length-1 ; i++){
-        form[i].value = document.getElementById(key).childNodes[2^i+1].textContent
+        power = Math.pow(2,i)
+        console.log(power)
+        editValue = document.getElementById(key).childNodes[power+1].textContent
+        console.log(editValue)
+        form[i].value = document.getElementById(key).childNodes[power+1].textContent
     }
     console.log(form)
     document.getElementById("addTitle").innerHTML="학생 정보 수정"
     document.getElementById("addBtn").innerHTML="저장"
 
-    console.log("testedit")
+    
 }
 
 const delStudent = async (key) => {

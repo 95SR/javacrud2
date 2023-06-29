@@ -14,7 +14,7 @@ public class StudentRepository {
     }
 
     public ArrayList<Student> getAllStudents() {
-        System.out.println(mydata);
+        
         return mydata;
     }
 
@@ -59,10 +59,32 @@ public class StudentRepository {
     boolean deleted=false;
        Predicate<Student> condition = student -> student.getId()==id;
        deleted = mydata.removeIf(condition);
-        CsvWriter.removeStudent(id);
+        CsvWriter.updateStudent(mydata);
        
 
 
        return deleted;
+    }
+
+    public Student editStudent(Student student){
+        Student editedStudent = new Student();
+        int id = student.getId();
+
+        for (Student myStudent : mydata) {
+            if(myStudent.getId()==id){
+                myStudent.setName(student.getName());
+                myStudent.setSex(student.getSex());
+                myStudent.setAge(student.getAge());
+                myStudent.setPhone(student.getPhone());
+                myStudent.setLocation(student.getLocation());
+                editedStudent = myStudent;
+                break;
+            }            
+        }
+
+         CsvWriter.updateStudent(mydata);
+
+
+        return editedStudent;
     }
 }

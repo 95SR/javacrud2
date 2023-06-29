@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class StudentsResponse extends Response {
     private ArrayList<Student> data;
-
+    
     public ArrayList<Student> getData() {
         return data;
     }
